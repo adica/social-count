@@ -1,7 +1,7 @@
 
 # socail count
 
-> angular socail network coiunter
+> angular socail networks counter
 
 ## Dependencies
 Tools needed to run this app:
