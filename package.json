@@ -46,7 +46,7 @@
   },
   "scripts": {
     "test": "karma start",
-    "start": "gulp serve"
+    "start": "gulp"
   },
   "keywords": [
     "angular",
