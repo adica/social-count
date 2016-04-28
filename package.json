@@ -1,7 +1,7 @@
 {
-  "name": "ng6-starter",
+  "name": "social-count",
   "version": "0.0.1",
-  "description": "Starter for Angular + ES6 + (Webpack or JSPM)",
+  "description": "angular socail networks counter",
   "main": "index.js",
   "dependencies": {
     "angular": "^1.5.0",
@@ -45,7 +45,8 @@
     "yargs": "^3.9.0"
   },
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "start": "gulp serve"
   },
   "keywords": [
     "angular",

@@ -14,7 +14,7 @@ Once you have these, install the following as globals:
 * `npm install` to install dependencies
 
 ## Running the App
-`npm run`
+`npm strat`
 
 ## Testing the app
 `npm test`
