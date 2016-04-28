@@ -3,10 +3,6 @@
 
 > angular socail network coiunter
 
- **commands:**:
-* test the app: `npm test`
-* run the app: `npm run`
-
 
 # Getting Started
 ## Dependencies
@@ -23,6 +19,8 @@ Once you have these, install the following as globals:
 
 ## Running the App
 `npm run`
+
+## Testing the app
+`npm test`
  
-Development from the best.
-> Looking for corporate Angular training, want to host us, or Angular consulting? scott@angularclass.com
+
