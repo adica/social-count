@@ -5,7 +5,8 @@
 </header>
 <main>
   <div>
-    <h1>This is {{ vm.name }} page</h1>
+    <h1>This is {{ ::vm.name }} page</h1>
+    <h3>this is from service: {{ ::vm.socialCountResult}}</h3>
     <socialcount></socialcount>
   </div>
 </main>
