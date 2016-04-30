@@ -1,13 +1,13 @@
 class HomeController {
   constructor(socialCountService) {
+  	'ngInject';
     this.name = 'home';
     this.socialCountService = socialCountService;
   }
 
   get socialCountResult(){
-  	return this.socialCountService.getSocialCount;
+  	return this.socialCountService.getFacebookData;
   }
 }
 
-HomeController.$inject = [ 'socialCountService' ];
 export default HomeController;
