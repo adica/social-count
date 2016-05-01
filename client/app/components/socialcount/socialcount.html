@@ -3,6 +3,10 @@
     <select id="networkList" ng-model="vm.selectedNetwork">
         <option ng-repeat="network in vm.socialNetworksList" value="{{network.type}}">{{network.type}}</option>
     </select>
-    <button ng-click="vm.onGetData()">Get Data</button>
+    <button ng-click="vm.onGetData()">URL/Provider</button>
+    <button ng-click="vm.onGetDataUrls()">Multiple URL's/Provider</button>
+    <button ng-click="vm.onGetDataProviersUrls()">Multiple URL's/Multiple Providers</button>
+    
+    
     <p>data: {{ vm.socialCountResult}}</p>
 </div>

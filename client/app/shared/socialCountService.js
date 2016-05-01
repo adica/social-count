@@ -1,3 +1,5 @@
+import { FACEBOOK, PINTEREST } from './consts';
+
 class socialCountServiceResult {
     constructor(data) {
         if (data) {
@@ -19,32 +21,42 @@ class socialCountService {
         this.$http = $http;
         this.$q = $q;
         this.socialCountObj = {};
-        this.facebookAPI = networks.filter((item) => { 
-        	return item.type === "facebook" 
+        this.facebookAPI = networks.filter((item) => {
+            return item.type === FACEBOOK
         })[0].api;
-        this.pinterestAPI = networks.filter((item) => { 
-        	return item.type === "pinterest" 
+        this.pinterestAPI = networks.filter((item) => {
+            return item.type === PINTEREST
         })[0].api;
     }
 
-    getSocialCount(provider, pageUrl) {
+
+    getSocialCount(provider, pageUrl, urlArray = undefined, providers = undefined) {
         let deferred = this.$q.defer();
         let result;
-        if (provider.type === "facebook") {
+
+        if (providers && urlArray) {
+            deferred.resolve({ "providers": "urlArray" });
+        } else if (urlArray) {
+            deferred.resolve({ "urlArray": "yy" });
+        } else if (provider.type === FACEBOOK) {
             this.$http.get(this.facebookAPI + `%27${pageUrl}%27`).then((response) => {
                 result = new socialCountServiceResult(response.data.data[0]);
                 deferred.resolve(result);
             });
-        } else if (provider.type === "pinterest") {
+        } else if (provider.type === PINTEREST) {
             this.$http.get(this.pinterestAPI + `${pageUrl}`).then((response) => {
                 const clean = response.data.replace("cb(", "").replace(response.data[response.data.lastIndexOf(')')], "");
                 result = new socialCountServiceResult(JSON.parse(clean));
                 deferred.resolve(result);
             });
-
+        }
+        else{
+        	deferred.resolve("no data");
         }
         return deferred.promise;
     }
+
+
 
 }
 
