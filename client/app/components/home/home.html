@@ -4,8 +4,12 @@
 </header>
 <main>
   <div>
-    <h1>This is {{ ::vm.name }} page</h1>
-    <h3>this is from service: {{ ::vm.socialCountResult}}</h3>
+  	<input type="url" ng-model="vm.url" placeholder="URL">
+    <select id="networkList" ng-model="vm.selectedNetwork">
+    	<option ng-repeat="network in vm.socialNetworksList" value="{{network.type}}">{{network.type}}</option>
+    </select>
+    <button ng-click="vm.onGetData()">Get Data</button>
+    <p>data: {{ vm.socialCountResult}}</p>
     <socialcount></socialcount>
   </div>
 </main>
