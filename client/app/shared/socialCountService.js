@@ -11,14 +11,20 @@ class socialCountServiceResult {
 }
 
 
+const networks = require('./networks.json').networks;
+
 class socialCountService {
     constructor($http, $q) {
         'ngInject';
         this.$http = $http;
         this.$q = $q;
         this.socialCountObj = {};
-        this.facebookAPI = "https://graph.facebook.com/fql?q=SELECT%20url,%20share_count,%20like_count%20,%20comment_count%20FROM%20link_stat%20WHERE%20url=";
-        this.pinterestAPI = "http://api.pinterest.com/v1/urls/count.json?callback=cb&url=";
+        this.facebookAPI = networks.filter((item) => { 
+        	return item.type === "facebook" 
+        })[0].api;
+        this.pinterestAPI = networks.filter((item) => { 
+        	return item.type === "pinterest" 
+        })[0].api;
     }
 
     getSocialCount(provider, pageUrl) {

@@ -1,5 +1,6 @@
 {
     "networks": [
-        { "type": "facebook" }, { "type": "pinterest" }
+        { "type": "facebook",  "api": "https://graph.facebook.com/fql?q=SELECT%20url,%20share_count,%20like_count%20,%20comment_count%20FROM%20link_stat%20WHERE%20url=" },
+        { "type": "pinterest", "api" : "http://api.pinterest.com/v1/urls/count.json?callback=cb&url=" }
     ]
 }
