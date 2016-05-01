@@ -1,21 +1,17 @@
 import { FACEBOOK, PINTEREST } from './consts';
+const networks = require('./networks.json').networks;
 
 class socialCountServiceResult {
     constructor(data) {
         if (data) {
-        	this.url = data.url;
+            this.url = data.url;
             this.likes = data.like_count;
             this.shares = data.share_count;
             this.comments = data.comment_count;
             this.pins = data.count;
-            
         }
-
     }
 }
-
-
-const networks = require('./networks.json').networks;
 
 class socialCountService {
     constructor($http, $q) {
@@ -59,14 +55,12 @@ class socialCountService {
                 resArr = [];
             all.then((data) => {
                 data.forEach((item) => {
-
                     if (provider.type === FACEBOOK) {
                         resArr.push(new socialCountServiceResult(item.data.data[0]));
                     } else if (provider.type === PINTEREST) {
                         const clean = item.data.replace("cb(", "").replace(item.data[item.data.lastIndexOf(')')], "");
                         resArr.push(new socialCountServiceResult(JSON.parse(clean)));
                     }
-
                 });
                 deferred.resolve(resArr);
             });
@@ -87,8 +81,6 @@ class socialCountService {
         }
         return deferred.promise;
     }
-
-
 
 }
 
