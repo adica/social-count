@@ -1,4 +1,4 @@
-const networks = require('./networks.json').networks;
+const networks = require('./../../shared/data.json').networks;
 
 class socialProvider {
 	constructor(type){

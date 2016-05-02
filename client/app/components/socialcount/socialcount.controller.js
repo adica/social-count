@@ -1,7 +1,7 @@
 import {FACEBOOK, PINTEREST} from './../../shared/consts';
-import socialProvider from './../../shared/socialProvider';
-const urlList =  require('./../../shared/urls.json').urls; 
-const networks = require('./../../shared/networks.json').networks;
+import socialProvider from './socialProvider';
+const urlList =  require('./../../shared/data.json').urls; 
+const networks = require('./../../shared/data.json').networks;
 
 class SocialcountController {
     constructor(socialCountService) {
