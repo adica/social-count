@@ -1,7 +1,7 @@
 
 # socail count
 
-> angular socail networks counter
+> angular socail networks counter with AngularJS + ES6 + Webpack
 
 ## Dependencies
 Tools needed to run this app:
