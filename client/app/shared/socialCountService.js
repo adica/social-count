@@ -3,7 +3,15 @@ const networks = require('./networks.json').networks;
 
 class socialCountServiceResult {
     constructor(data) {
-        if (data) {
+        if (data && !data.error) {
+
+            if (data.indexOf("cb(") !== -1) {
+                const clean = data.replace("cb(", "").replace(data[data.lastIndexOf(')')], "");
+                data = JSON.parse(clean);
+            } else {
+                data = data.data[0];
+            }
+
             this.url = data.url;
             this.likes = data.like_count;
             this.shares = data.share_count;
@@ -13,18 +21,14 @@ class socialCountServiceResult {
     }
 }
 
+
+
 class socialCountService {
     constructor($http, $q) {
         'ngInject';
         this.$http = $http;
         this.$q = $q;
-        this.socialCountObj = {};
-        this.facebookAPI = networks.filter((item) => {
-            return item.type === FACEBOOK
-        })[0].api;
-        this.pinterestAPI = networks.filter((item) => {
-            return item.type === PINTEREST
-        })[0].api;
+        this.socialCountObj = {};       
     }
 
     getData(url) {
@@ -41,43 +45,25 @@ class socialCountService {
             result;
 
         if (providers && urlArray) {
+        	//TODO
             deferred.resolve({ "providers": "urlArray" });
         } else if (urlArray) {
-
             urlArray.forEach((url) => {
-                if (provider.type === FACEBOOK) {
-                    deferredArr.push(this.getData(this.facebookAPI + `%27${url}%27`));
-                } else if (provider.type === PINTEREST) {
-                    deferredArr.push(this.getData(this.pinterestAPI + `${url}`));
-                }
+                deferredArr.push(this.getData(provider.API.replace("##pageUrl##", url)));
             });
             let all = this.$q.all(deferredArr),
                 resArr = [];
             all.then((data) => {
                 data.forEach((item) => {
-                    if (provider.type === FACEBOOK) {
-                        resArr.push(new socialCountServiceResult(item.data.data[0]));
-                    } else if (provider.type === PINTEREST) {
-                        const clean = item.data.replace("cb(", "").replace(item.data[item.data.lastIndexOf(')')], "");
-                        resArr.push(new socialCountServiceResult(JSON.parse(clean)));
-                    }
+                    resArr.push(new socialCountServiceResult(item.data));
                 });
                 deferred.resolve(resArr);
             });
-
-        } else if (provider.type === FACEBOOK) {
-            this.getData(this.facebookAPI + `%27${pageUrl}%27`).then((response) => {
-                result = new socialCountServiceResult(response.data.data[0]);
-                deferred.resolve(result);
-            });
-        } else if (provider.type === PINTEREST) {
-            this.getData(this.pinterestAPI + `${pageUrl}`).then((response) => {
-                const clean = response.data.replace("cb(", "").replace(response.data[response.data.lastIndexOf(')')], "");
-                result = new socialCountServiceResult(JSON.parse(clean));
-                deferred.resolve(result);
-            });
         } else {
-            deferred.resolve("no data");
+            this.getData(provider.API.replace("##pageUrl##", pageUrl)).then((response) => {
+                result = new socialCountServiceResult(response.data);
+                deferred.resolve(result);
+            });
         }
         return deferred.promise;
     }
