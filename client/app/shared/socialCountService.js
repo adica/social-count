@@ -42,17 +42,30 @@ class socialCountService {
     getSocialCount(provider, pageUrl, urlArray = undefined, providers = undefined) {
         let deferred = this.$q.defer(),
             deferredArr = [],
-            result;
+            resArr = [],
+            result,
+            all;
 
         if (providers && urlArray) {
         	//TODO
-            deferred.resolve({ "providers": "urlArray" });
+            //deferred.resolve({ "providers": "urlArray" });
+            providers.forEach((prov) => {
+            	urlArray.forEach((url) => {
+            		deferredArr.push(this.getData(prov.API.replace("##pageUrl##", url)));
+            	});
+            });
+            all = this.$q.all(deferredArr);                
+            all.then((data) => {
+                data.forEach((item) => {
+                    resArr.push(new socialCountServiceResult(item.data));
+                });
+                deferred.resolve(resArr);
+            });
         } else if (urlArray) {
             urlArray.forEach((url) => {
                 deferredArr.push(this.getData(provider.API.replace("##pageUrl##", url)));
             });
-            let all = this.$q.all(deferredArr),
-                resArr = [];
+            all = this.$q.all(deferredArr);                
             all.then((data) => {
                 data.forEach((item) => {
                     resArr.push(new socialCountServiceResult(item.data));
